@@ -13,7 +13,8 @@
     	<span class="fill"><a href="index.html">Index</a> | <a href="menu.html">Menu</a> | <a href="statuses.html">Statuses</a></span>
 	</header>
 	<p class="pagename">Order Statuses</p>
-	<table>
+	<table id="status-table">
+		<thead>
 		<tr>
 			<th>
 				<p>Created</p>
@@ -28,74 +29,10 @@
 				<p>Status</p>
 			</th>
 		</tr>
-		<tr>
-			<td>
-				<p id="time">__</p>
-			</td>
-			<td>
-				<img src="http://img.sndimg.com/food/image/upload/h_420,w_560,c_fit/v1/img/recipes/33/90/71/picNISqBi.jpg" alt="Bagels and Lox (credit to Food Network)"" style="width:280px;height:210px;">
-				<p>Bagels w/ Lox</p>
-			</td>
-			<td>
-				<p>D. Lectable</p>
-			</td>
-			<td>
-				<p>In Progress</p>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<p id="time2">__</p>
-			</td>
-			<td>
-				<img src="http://img.sndimg.com/food/image/upload/h_420,w_560,c_fit/v1/img/recipes/33/90/71/picNISqBi.jpg" alt="Bagels and Lox (credit to Food Network)"" style="width:280px;height:210px;">
-				<p>Bagels w/ Lox</p>
-			</td>
-			<td>
-				<p>D. Lectable</p>
-			</td>
-			<td>
-				<p>In Progress</p>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<p id="time3">__</p>
-			</td>
-			<td>
-				<img src="http://img.sndimg.com/food/image/upload/h_420,w_560,c_fit/v1/img/recipes/33/90/71/picNISqBi.jpg" alt="Bagels and Lox (credit to Food Network)"" style="width:280px;height:210px;">
-				<p>Bagels w/ Lox</p>
-			</td>
-			<td>
-				<p>D. Lectable</p>
-			</td>
-			<td>
-				<p>In Progress</p>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<p id="time4">__</p>
-			</td>
-			<td>
-				<img src="http://img.sndimg.com/food/image/upload/h_420,w_560,c_fit/v1/img/recipes/33/90/71/picNISqBi.jpg" alt="Bagels and Lox (credit to Food Network)"" style="width:280px;height:210px;">
-				<p>Bagels w/ Lox</p>
-			</td>
-			<td>
-				<p>D. Lectable</p>
-			</td>
-			<td>
-				<p>In Progress</p>
-			</td>
-		</tr>
+		</thead>
+		<tbody>
+		</tbody>
 	</table>
-	<script>
-		var d = new Date();
-		document.getElementById("time").innerHTML = d.toDateString();
-		document.getElementById("time2").innerHTML = d.toDateString();
-		document.getElementById("time3").innerHTML = d.toDateString();
-		document.getElementById("time4").innerHTML = d.toDateString();
-	</script>
 	<footer>
 		<p>&copy; Food Vendor. Place for Food Inc., All Rights Reserved</p>
 	</footer>
