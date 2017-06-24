@@ -46,7 +46,6 @@ class Cart {
 
     init () {
         this.render();
-        // TODO: attach remove cart items to rendered HTML
     }
 
     destroy () {
@@ -54,7 +53,8 @@ class Cart {
     }
 
     removeItem (item) {
-        // TODO: logic to remove an item from cart
+        var toRemove = items.indexOf(item);
+        items.splice(toRemove, 1);
         this.render();
     }
 
@@ -66,17 +66,17 @@ class Cart {
         console.log(this.store.cartItems);
         let tbody = this.root.querySelector('tbody');
         tbody.innerHTML = `<tr class="item">
-            <td>'items[1]'<br />'items[2]'</td>
-            <td>'items[3]'</td>
+            <td>'items.imgsrc'<br />'items.name'</td>
+            <td>'items.price'</td>
+            <td><input type="checkbox" name="quant" value="DontRemove" checked><br></td>
         </tr>`;
     }
 }
 
 class CheckoutButton {
-    constructor(root, store, array) {
+    constructor(root, store) {
         this.root = root;
         this.store = store;
-        this.array = ;
         this.onClick = () => this.addItemToCart();
         this.init();
     }
@@ -90,10 +90,15 @@ class CheckoutButton {
 
     addItemToCart () {
         let cartItems = this.store.cartItems || [];
-        store.cartItems = array[i];
         console.log(this.root.dataset);
+        let d = new Date();
         cartItems.push({
-            name: 'test'
+            imgsrc: '<img src="http://img.sndimg.com/food/image/upload/h_420,w_560,c_fit/v1/img/recipes/33/90/71/picNISqBi.jpg" alt="Bagels and Lox (credit to Food Network)" style="width:280px;height:210px;">',
+            name: '<p>Bagels w/ Lox</p>',
+            price: '<p>$7.95</p>',
+            date: d.toDateString(),
+            customer: 'D. Lectable',
+            status: 'In Progress'
         });
         console.log(cartItems);
         this.store.cartItems = cartItems;
@@ -105,20 +110,28 @@ class StatusTable {
     constructor(root, store) {
         this.root = root;
         this.store = store;
+        this.items = this.store.cartItems;
         init();
     }
 
     init () {
-        // attach click event listener to table header row on each column
+        let created = document.querySelector('#createdheader');
+        createdheader.addEventListener("click", sort(date));
+        let itemheader = document.querySelector('#itemheader');
+        itemheader.addEventListener("click", sort(name));
+        let customerheader = document.querySelector('#customerheader');
+        customerheader.addEventListener("click", sort(customer));
+        let statusheader = document.querySelector('#statusheader');
+        statusheader.addEventListener("click", sort(status));
         render();
     }
 
     destroy () {
-        // remove all the events attached from init
+        tbody.innerHTML = '';
     }
 
     sort (columnName) {
-        // after sorting the array of statuses, re render item to update view
+        dynamicSort(columnName);
         render();
     }
 
@@ -126,13 +139,24 @@ class StatusTable {
     render () {
         console.log(this.store.cartItems);
         let tbody = this.root.querySelector('tbody');
-        let d = new Date();
         tbody.innerHTML = `<tr class="item">
-            <td><p>'d.toDateString()'</p></td>
-            <td>'items[1]'<br />'items[2]'</td>
-            <td><p>D. Lectable<p></td>
-            <td><p>In Progress<p></td>
+            <td><p>'items.date'</p></td>
+            <td>'items.imgsrc'<br />'items.name'</td>
+            <td>'items.customer'</td>
+            <td>'items.status'</td>
         </tr>`;
+    }
+}
+
+function dynamicSort(property) {
+    var sortOrder = 1;
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function (a,b) {
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
     }
 }
 
@@ -143,14 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let statusTable = document.querySelector('#status-table');
     let cart = document.querySelector('#cart-table');
     let checkoutButtons = document.querySelectorAll('#checkout-button');
-    let array1 = ['<img src="http://img.sndimg.com/food/image/upload/h_420,w_560,c_fit/v1/img/recipes/33/90/71/picNISqBi.jpg" alt="Bagels and Lox (credit to Food Network)" style="width:280px;height:210px;">',
-    '<p>Bagels w/ Lox</p>','<p>$7.95</p>'];
-    let array2 = ['<img src="http://food.fnr.sndimg.com/content/dam/images/food/fullset/2003/11/18/0/ei1b04_baked_salmon.jpg.rend.hgtvcom.616.462.jpeg" alt="Salmon Baked in Foil (credit to Giada de Laurentiis and Food Network)" style="width:280px;height:210px;">',
-    '<p>Salmon Baked in Foil</p>','<p>$8.55</p>'];
-    let array3 = ['<img src="http://food.fnr.sndimg.com/content/dam/images/food/fullset/2009/2/1/0/AI0212-1_Cheese-Quesadillas_s4x3.jpg.rend.hgtvcom.616.462.jpeg" alt="Three Cheese Quesadillas (credit Aida Mollenkamp and Food Network" style="width:280px;height:210px;">',
-    '<p>Three Cheese Quesadillas</p>','<p>$7.35</p>'];
-    let array = [array1,array2,array3];
-
     let store = new Store(window.localStorage);
     if (table) {
         new StatusTable(table, store);
@@ -160,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (checkoutButtons && checkoutButtons.length) {
         for (var i = 0; i < checkoutButtons.length; i ++) {
-            new CheckoutButton(checkoutButtons[i], store, array[i]);
+            new CheckoutButton(checkoutButtons[i], store);
         }
     }
 });
